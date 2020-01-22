@@ -12,7 +12,7 @@ function App() {
         </p>
       </header>
       <nav>
-        <div><a href='../../index.md'>react-measured-grid API</a></div>
+        <div><a href='../..'>react-measured-grid API</a></div>
         <div><a href='https://github.com/DavidCary/react-measured-grid'>repo</a></div>
       </nav>
       <main className="App-main">
