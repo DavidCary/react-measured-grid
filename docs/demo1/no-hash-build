@@ -1,17 +1,40 @@
 #!/usr/bin/env bash
 
 cd build
-cp static/css/main.*.css main.css
-cp static/css/main.*.css.map main.css.map
-cp static/js/main.*.js main.js
-cp static/js/main.*.js.map main.js.map
-rm -fR static
-rm asset-manifest.json
-rm service-worker.js
-sed -i 's/static\/css\/main.[a-f0-9]\{8\}\.css/main.css/;s/static\/js\/main.[a-f0-9]\{8\}\.js/main.js/;' index.html
-sed -i 's/static\/css\/main.[a-f0-9]\{8\}\.css/main.css/g;s/main.[a-f0-9]\{8\}\.css/main.css/g' main.css
-sed -i 's/static\/css\/main.[a-f0-9]\{8\}\.css/main.css/g;s/main.[a-f0-9]\{8\}\.css/main.css/g' main.css.map
-sed -i 's/static\/js\/main.[a-f0-9]\{8\}\.js/main.js/g;s/main.[a-f0-9]\{8\}\.js/main.js/g' main.js
-sed -i 's/static\/js\/main.[a-f0-9]\{8\}\.js/main.js/g;s/main.[a-f0-9]\{8\}\.js/main.js/g' main.js.map
+mv static/css/main.*.chunk.css main.css
+mv static/css/main.*.chunk.css.map main.css.map
+mv static/js/main.*.chunk.js main.js
+mv static/js/main.*.chunk.js.map main.js.map
+mv static/js/runtime-main.*.js runtime-main.js
+mv static/js/runtime-main.*.js.map runtime-main.js.map
+rm precache-manifest.*.js
+#rm asset-manifest.json
+rm -f service-worker.js
+sed -i 's/static\/css\/main\.[a-f0-9]\{8\}\.chunk\.css/main.css/g;' index.html
+sed -i 's/static\/js\/main\.[a-f0-9]\{8\}\.chunk\.js/main.js/g;' index.html
+
+sed -i 's/static\/css\/main\.[a-f0-9]\{8\}\.chunk\.css/main.css/g;' main.css
+sed -i 's/main\.[a-f0-9]\{8\}\.chunk\.css/main.css/g' main.css
+sed -i 's/static\/css\/main\.[a-f0-9]\{8\}\.chunk\.css/main.css/g;' main.css.map
+sed -i 's/main\.[a-f0-9]\{8\}\.chunk\.css/main.css/g' main.css.map
+
+sed -i 's/static\/js\/main\.[a-f0-9]\{8\}\.chunk\.js/main.js/g;' main.js
+sed -i 's/main\.[a-f0-9]\{8\}\.chunk\.js/main.js/g' main.js
+sed -i 's/static\/js\/main\.[a-f0-9]\{8\}\.chunk\.js/main.js/g;' main.js.map
+sed -i 's/main\.[a-f0-9]\{8\}\.chunk\.js/main.js/g' main.js.map
+
+sed -i 's/static\/js\/runtime-main\.[a-f0-9]\{8\}\.js/runtime-main.js/g;' runtime-main.js
+sed -i 's/runtime-main\.[a-f0-9]\{8\}\.js/runtime-main.js/g' runtime-main.js
+sed -i 's/static\/js\/runtime-main\.[a-f0-9]\{8\}\.js/runtime-main.js/g;' runtime-main.js.map
+sed -i 's/runtime-main\.[a-f0-9]\{8\}\.js/runtime-main.js/g' runtime-main.js.map
+
+
+sed -i 's/static\/css\/main\.[a-f0-9]\{8\}\.chunk\.css/main.css/g;' asset-manifest.json
+sed -i 's/main\.[a-f0-9]\{8\}\.chunk\.css/main.css/g' asset-manifest.json
+sed -i 's/static\/js\/main\.[a-f0-9]\{8\}\.chunk\.js/main.js/g;' asset-manifest.json
+sed -i 's/main\.[a-f0-9]\{8\}\.chunk\.js/main.js/g' asset-manifest.json
+sed -i 's/static\/js\/runtime-main\.[a-f0-9]\{8\}\.js/runtime-main.js/g;' asset-manifest.json
+sed -i 's/runtime-main\.[a-f0-9]\{8\}\.js/runtime-main.js/g' asset-manifest.json
+
 echo done!
 

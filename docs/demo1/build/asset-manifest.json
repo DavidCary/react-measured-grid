@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/react-measured-grid/demo1/build/main.css",
+    "main.js": "/react-measured-grid/demo1/build/main.js",
+    "main.js.map": "/react-measured-grid/demo1/build/main.js.map",
+    "runtime-main.js": "/react-measured-grid/demo1/build/runtime-main.js",
+    "runtime-main.js.map": "/react-measured-grid/demo1/build/runtime-main.js.map",
+    "static/js/2.9d68b2f4.chunk.js": "/react-measured-grid/demo1/build/static/js/2.9d68b2f4.chunk.js",
+    "static/js/2.9d68b2f4.chunk.js.map": "/react-measured-grid/demo1/build/static/js/2.9d68b2f4.chunk.js.map",
+    "index.html": "/react-measured-grid/demo1/build/index.html",
+    "precache-manifest.22ade993db56a76faee18dbe0a169506.js": "/react-measured-grid/demo1/build/precache-manifest.22ade993db56a76faee18dbe0a169506.js",
+    "service-worker.js": "/react-measured-grid/demo1/build/service-worker.js",
+    "main.css.map": "/react-measured-grid/demo1/build/main.css.map",
+    "static/js/2.9d68b2f4.chunk.js.LICENSE": "/react-measured-grid/demo1/build/static/js/2.9d68b2f4.chunk.js.LICENSE"
+  },
+  "entrypoints": [
+    "runtime-main.js",
+    "static/js/2.9d68b2f4.chunk.js",
+    "main.css",
+    "main.js"
+  ]
+}
