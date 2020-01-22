@@ -1,0 +1,93 @@
+.App {
+  text-align: center;
+  font-size: 11pt;
+}
+
+.App-header {
+  background-color: #282c34;
+  height: 1.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 10pt;
+  color: white;
+}
+
+#quote-grid {
+  text-align: left;
+  margin-left: 3ex;
+  margin-bottom: 2em;
+}
+#quote-grid h1 {
+  font-size: 150%;
+}
+#quote-grid .grid-view {
+  border: 1px black solid;
+  height: 20em;
+  width: 80ex;
+}
+#quote-grid button {
+  background-color: #686;
+  color: #eee;
+  margin-right: 1ex;
+  margin-left: 1ex;
+  padding: 0.5ex 2ex;
+  border-radius: 0.75ex;
+}
+#quote-grid input {
+  text-align: right;
+}
+#quote-grid input,
+#quote-grid select {
+  margin-left: 0.5ex;
+  margin-right: 1ex;
+}
+#quote-grid>div {
+  margin: 1ex 0;
+}
+#quote-grid td.label {
+  text-align: right;
+}
+.grid-view {
+  resize: both;
+  hyphens: auto;
+}
+.grid-row {
+  border-bottom: 1px solid #c59a2a;
+  border-top: 1px solid #c59a2a;
+}
+.data-stats, .grid-cell {
+  vertical-align: top;
+}
+.col-seq {
+  text-align: right;
+  padding-right: 1ex;
+  background-color: #cce;
+  width: 7ex;
+}
+.col-attribution {
+  width: 20ex;
+}
+.col-attribution div {
+  padding: 0px 1ex;
+}
+.set1 div {
+  background-color: #eef;
+}
+.set2 div {
+  background-color: #ded;
+}
+.col-quote {
+  padding-bottom: 0.8ex;
+}
+.col-quote div {
+  padding: 0 1ex;
+}
+.col-quote.set1 {
+  background-color: #99c;
+}
+.col-quote.set2 {
+  background-color: #9c9;
+}
+/**/

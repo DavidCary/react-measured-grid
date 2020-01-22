@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+cd build
+cp static/css/main.*.css main.css
+cp static/css/main.*.css.map main.css.map
+cp static/js/main.*.js main.js
+cp static/js/main.*.js.map main.js.map
+rm -fR static
+rm asset-manifest.json
+rm service-worker.js
+sed -i 's/static\/css\/main.[a-f0-9]\{8\}\.css/main.css/;s/static\/js\/main.[a-f0-9]\{8\}\.js/main.js/;' index.html
+sed -i 's/static\/css\/main.[a-f0-9]\{8\}\.css/main.css/g;s/main.[a-f0-9]\{8\}\.css/main.css/g' main.css
+sed -i 's/static\/css\/main.[a-f0-9]\{8\}\.css/main.css/g;s/main.[a-f0-9]\{8\}\.css/main.css/g' main.css.map
+sed -i 's/static\/js\/main.[a-f0-9]\{8\}\.js/main.js/g;s/main.[a-f0-9]\{8\}\.js/main.js/g' main.js
+sed -i 's/static\/js\/main.[a-f0-9]\{8\}\.js/main.js/g;s/main.[a-f0-9]\{8\}\.js/main.js/g' main.js.map
+echo done!
+
