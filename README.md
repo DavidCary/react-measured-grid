@@ -18,6 +18,12 @@
       with a combination of inline and selector-based CSS
       in units other than pixels.
 
+## Demo
+
+You can interact with a 
+[demo](https://DavidCary.github.io/react-measured-grid/demo1/build)
+to get an idea of the performance and flexibility this offers.
+
 ## Install
 
 ```bash
@@ -49,7 +55,7 @@ can be as simple as:
         />
     
 You can read about the
-[full API](https:DavidCary.github.io/react-measured-grid/)
+[full API](https://DavidCary.github.io/react-measured-grid/)
 for more details and options.
 
 Additional features include:
@@ -60,10 +66,6 @@ Additional features include:
       the end of the data.
   - Support for rows that dynamically change height
       and columns that change width.
-
-You can also interact with a 
-[demo](https:DavidCary.github.io/react-measured-grid/demo1/build)
-that uses some of these features.
 
 ## Background
 

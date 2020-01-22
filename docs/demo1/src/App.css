@@ -2,7 +2,6 @@
   text-align: center;
   font-size: 11pt;
 }
-
 .App-header {
   background-color: #282c34;
   height: 1.5em;
@@ -13,7 +12,22 @@
   font-size: 10pt;
   color: white;
 }
-
+nav {
+  background-color: #686;
+  padding: 0.5ex 5ex;
+  text-align: left;
+}
+nav div {
+  display: inline-block;
+  margin: 0px 5ex;
+}
+nav a, nav a:visited {
+  color: #ddd;
+  text-decoration: none;
+}
+nav a:hover {
+  color: #fff;
+}
 #quote-grid {
   text-align: left;
   margin-left: 3ex;

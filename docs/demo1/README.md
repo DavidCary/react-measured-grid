@@ -1,3 +1,5 @@
+| [demo](./build) | [react-measured-grid API](../api.md) | [repo](https://github.com/DavidCary/react-measured-grid) |
+
 # Demo 1: React Measured Grid
 
 This directory provides a demo of a MeasuredGrid that displays pairs of quotes.

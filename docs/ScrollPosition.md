@@ -1,6 +1,4 @@
-\| [react-measured-grid API](./api.md) |
-[MeasuredGrid](./MeasuredGrid.md) |
-[PositionTracker](./PositionTracker.md) |
+| [react-measured-grid API](./api.md) | [MeasuredGrid](./MeasuredGrid.md) | [ScrollPosition](./ScrollPosition.md) | [PositionTracker](./PositionTracker.md) | [demo](./demo1/build) | [repo](https://github.com/DavidCary/react-measured-grid) |
 
 # ScrollPosition API
 
