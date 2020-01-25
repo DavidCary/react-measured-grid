@@ -54,6 +54,8 @@ can be as simple as:
           viewStyle={{width: 75ex, height: 20ex}}
         />
     
+## API
+
 You can read about the
 [full API](https://DavidCary.github.io/react-measured-grid/)
 for more details and options.
@@ -78,9 +80,9 @@ In contrast, if `MeasuredGrid` needs to add part of a row to the DOM,
 it will add the entire row.
 
 `react-measured-grid` was inspired by
-`[react-virtualized](https://npmjs.com/package/react-virtualized)`,
+[`react-virtualized`](https://npmjs.com/package/react-virtualized),
 but is somewhat more directly a fork of
-`[react-window](https://npmjs.co/package/react-window)`.
+[`react-window`](https://npmjs.co/package/react-window).
 
 `react-measured-grid` is designed
 to provide smoother scrolling than `react-virtualized`,
