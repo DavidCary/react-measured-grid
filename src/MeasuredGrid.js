@@ -3,7 +3,6 @@
 // Copyright (c) 2020, David Cary, MIT License
 
 import React from 'react';
-import { createElement } from 'react';
 import { cancelTimeout, requestTimeout } from './timer';
 import { getScrollbarSize, getRTLOffsetType } from './domHelpers';
 import PositionTracker from './PositionTracker.js';
@@ -413,7 +412,7 @@ class MeasuredGrid extends React.Component<Props, State> {
           } else {
             child = children;
           }
-          const cell = createElement(
+          const cell = React.createElement(
             'div',
             {
               className: 'grid-cell ' +
@@ -431,7 +430,7 @@ class MeasuredGrid extends React.Component<Props, State> {
         }
         const rowKey = (itemKey && typeof itemKey === 'function' ?
               itemKey : defaultItemKey)(rowIndex, 'row');
-        const row = createElement('div', {
+        const row = React.createElement('div', {
             rowindex: rowIndex,
             className: 'grid-row '+ (rowIndex % 2 ? 'odd' : 'even'),
             key: rowKey,
@@ -458,7 +457,7 @@ class MeasuredGrid extends React.Component<Props, State> {
     const fullViewStyle:any = Object.assign({}, baseStyle,
           viewDimensionStyle, viewStyle);
 
-    const result = createElement(
+    const result = React.createElement(
       'div',
       {
         id: this.props.viewId,
@@ -468,7 +467,7 @@ class MeasuredGrid extends React.Component<Props, State> {
         onScroll: evt => this._onScroll(evt),
         onClick: evt => this._onResize(evt),
       },
-      createElement(
+      React.createElement(
         'div',
         {
           ref: this._gridbaseRef,
@@ -480,7 +479,7 @@ class MeasuredGrid extends React.Component<Props, State> {
             width: this._totalWidth,
           },
         },
-        createElement(
+        React.createElement(
           'div',
           {
             ref: this._renderedRef,

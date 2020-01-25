@@ -216,14 +216,14 @@ class QuoteGrid extends React.Component {
                   onClick={event => this.dataResize()}
                 >Resize</button>
               </td>
-              <td className="label"> Number of Rows: </td>
+              <td className="label"><label for='nbr-rows'>Number of Rows: </label></td>
               <td>
                 <input id='nbr-rows' size='5' value={this.state.nbrRows}
                   style={this.state.nbrRowsOK ? {} : errorStyle}
                   onChange={event => this.onChangeNbrRows(event)}
                 />
               </td>
-              <td className="label"> Quote Width (ex): </td>
+              <td className="label"><label for='quote-width'>Quote Width (ex): </label></td>
               <td>
                 <input id='quote-width' size='3' value={this.state.quoteExWidth}
                   style={this.state.quoteExWidthOK ? {} : errorStyle}
@@ -237,14 +237,14 @@ class QuoteGrid extends React.Component {
                   onClick={event => this.positionAt()}
                 >Position At</button>
               </td>
-              <td className="label"> Row Index: </td>
+              <td className="label"><label for='rows-index'>Row Index: </label></td>
               <td>
                 <input id='rows-index' size='5' value={this.state.rowIndex}
                   style={this.state.rowIndexOK ? {} : errorStyle}
                   onChange={event => this.onChangeRowIndex(event)}
                 />
               </td>
-              <td className="label"> Alignment: </td>
+              <td className="label"><label for='alignment'>Alignment: </label></td>
               <td>
                 <select id='alignment' value={this.state.alignment}
                   onChange={event => this.onChangeAlignment(event)}
@@ -254,7 +254,7 @@ class QuoteGrid extends React.Component {
                   <option value='end'>bottom</option>
                 </select>
               </td>
-              <td className="label"> Offset (px): </td>
+              <td className="label"><label for='row-offset'>Offset (px): </label></td>
               <td>
                 <input id='row-offset' size='3' value={this.state.rowOffset}
                   style={this.state.rowOffsetOK ? {} : errorStyle}

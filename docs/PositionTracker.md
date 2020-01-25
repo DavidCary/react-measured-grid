@@ -25,14 +25,14 @@ The following are methods that are available for use:
       to estimate the size of unmeasured items
       when calculating the total scroll offset of an item
       or when calculating the total size of the grid.
-      The default value is 30.
+      The default value is 18.
   - `lowSize` is the number of pixels used to estimate
       how much space an unmeasured item will take up when
       determining how many rows should be put in the DOM
       to fill the view window.
       It can also be a function that maps an item index
       to a number that is such an estimate.
-      The default value is 15.
+      The default value is 12.
   - The last two parameters are internal performance tuning parameters.
     `PositionTracker` builds a tree structure over its recorded size measurements,
     in order to more efficiently calculate total scrolling offsets for an item.
