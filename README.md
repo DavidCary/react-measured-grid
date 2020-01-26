@@ -2,8 +2,6 @@
 
 > A smoother scrolling virtualized React grid with dynamically measured rows and columns.
 
-[![NPM](https://img.shields.io/npm/v/react-measured-grid-dev.svg)](https://www.npmjs.com/package/react-measured-grid-dev) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-
 `react-measured-grid` can be a good tool to use when:
 
   - You want to display data in a tabular format with rows and columns.
