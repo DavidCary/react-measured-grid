@@ -1,6 +1,6 @@
 {
   "name": "react-measured-grid",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A smoother scrolling virtualized React grid with dynamically measured rows and columns.",
   "author": "David Cary",
   "license": "MIT",
@@ -22,6 +22,7 @@
     "npm": ">=5"
   },
   "scripts": {
+    "flow": "flow check src",
     "test": "jest",
     "test:watch": "jest --watch",
     "build": "rollup -c",
@@ -37,12 +38,19 @@
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-flow": "^7.8.3",
     "@babel/preset-react": "^7.8.3",
+    "babel-eslint": "^10.0.3",
+    "babel-jest": "^25.1.0",
+    "cross-env": "^6.0.3",
+    "eslint": "^6.8.0",
+    "eslint-plugin-flowtype": "^4.6.0",
+    "eslint-plugin-react": "^7.18.0",
+    "flow-bin": "^0.116.1",
+    "jest": "^25.1.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "@rollup/plugin-commonjs": "^11.0.1",
     "@rollup/plugin-json": "^4.0.1",
     "@rollup/plugin-node-resolve": "^7.0.0",
-    "cross-env": "^6.0.3",
     "rollup": "^1.29.1",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-terser": "^5.2.0"

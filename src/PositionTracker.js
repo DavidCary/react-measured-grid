@@ -25,7 +25,7 @@ class _Node {
     this.children = Array(maxChildren).fill(null);
   }
 
-  getTotalSize(unmeasuredSize: number) {
+  getTotalSize(unmeasuredSize: number): number {
     const totalSize = this.measuredSize +
           this.unmeasuredCount * unmeasuredSize;
     return totalSize;
@@ -90,10 +90,10 @@ class PositionTracker {
 
   constructor(
     itemCount: number =0,
-    unmeasuredSize: number,
-    lowSize: number | (index: number)=>number,
-    maxBranches: number,
-    maxLeafItems: number
+    unmeasuredSize: number | void,
+    lowSize: number | ((index: number)=>number) | void,
+    maxBranches: number | void,
+    maxLeafItems: number | void
   ) {
     //super();
     if (isFiniteNumberBetween(itemCount, 0, MAX_ITEM_COUNT)) {
@@ -278,7 +278,7 @@ class PositionTracker {
     return sizeDelta.oldSize;
   }
 
-  setLowSize(lowSize: number | (index: number)=>number): void {
+  setLowSize(lowSize: number | void | (index: number)=>number): void {
     if (isFiniteNumberBetween(lowSize, MIN_LOW_SIZE, this._unmeasuredSize) ||
           typeof lowSize === 'function') {
       this._lowSize = lowSize;
@@ -287,7 +287,7 @@ class PositionTracker {
     }
   }
 
-  setUnmeasuredSize(unmeasuredSize: number): void {
+  setUnmeasuredSize(unmeasuredSize: number | void): void {
     if (isFiniteNumberBetween(unmeasuredSize, MIN_UNMEASURED_SIZE,
           MAX_SIZE)) {
       this._unmeasuredSize = unmeasuredSize;
@@ -364,7 +364,7 @@ class PositionTracker {
     return sizeDelta;
   }
   
-  _getBranchSize(branchStats: BranchStats) {
+  _getBranchSize(branchStats: BranchStats): number {
     const size = branchStats.measuredSize +
           branchStats.unmeasuredCount * this._unmeasuredSize;
     return size;
@@ -541,7 +541,7 @@ class PositionTracker {
         node.lastAccumulatedIndex = branchIndex;
       }
       const nextNode = node.children[branchIndex];
-      const branchStart:number = (node.sumMeasuredSize[branchIndex] || 0) +
+      const branchStart: number = (node.sumMeasuredSize[branchIndex] || 0) +
             (node.sumUnmeasuredCount[branchIndex] || 0) * unmeasuredSize;
       if (typeof nextNode === 'number' || nextNode === null) {
         const start = unmeasuredSize * nextIndex;

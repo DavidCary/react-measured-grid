@@ -1,50 +1,60 @@
+// @flow
+
 // Copyright (c) 2020, David Cary, MIT License
 
 export const DBG = 5;
-export function PDBG(msg) {
-  console.debug(elapsed()+': '+msg);
+export function PDBG(msg: mixed) {
+  console.debug(elapsed()+': '+String(msg));
 }
 export const DBGPS = 3;
 export const DBGPS_DEPTH = 1;
 export const DBG_NO_DIDX = false; //To inspect interim DOM
 export const DBG_SHOW_JSON = false;
 
-export function isFiniteNumber(value) {
+export function isArray(value: mixed): boolean %checks {
+  return typeof value === 'object' && Array.isArray(value);
+}
+
+export function isFiniteNumber(value: mixed): boolean %checks {
   return typeof value === 'number' && isFinite(value);
 }
 
-export function isBetween(value, low, high) {
-  return value >= low && value <= high;
+export function isBetween(
+      value: mixed, low: number, high: number = Infinity
+      ): boolean %checks {
+  return typeof value === 'number' && value >= low && value <= high;
 }
 
-export function isFiniteNumberBetween(value, low, high) {
+export function isFiniteNumberBetween(
+      value: mixed, low: number, high: number = Infinity
+      ): boolean %checks {
   return typeof value === 'number' && isFinite(value) &&
         value >= low && value <= high;
 }
 
 const _startTime = Date.now();
-export function elapsed() {
+export function elapsed(): string {
   const now = Date.now();
   const elapsedMs = now - _startTime;
   const result = (elapsedMs / 1000).toFixed(3);
   return result;
 }
 
-export function TS(msg) {
+export function TS(msg: mixed): string {
   const result = elapsed()+': '+String(msg);
   return result;
 }
 
-export function show(value, maxDepth) {
+export function show(value: mixed, maxDepth: number = 1): string {
   const result = maxDepth <= 0 ? '' : qdmShow(value, 0, maxDepth);
   return result;
 }
 
-export function showx(value, maxDepth) {
-  return DBG_SHOW_JSON ? JSON.stringify(value) : show(value, maxDepth);
+export function showx(value: mixed, maxDepth: number = 1): string {
+  return DBG_SHOW_JSON ? String(JSON.stringify(value)) : show(value, maxDepth);
 }
 
-function qdmShow(value, depth, maxDepth) {
+function qdmShow(value: mixed, depth: number, maxDepth: number): string {
   let result = '';
   if (typeof value == 'string') {
     return '"' + value + '"';
@@ -69,13 +79,15 @@ function qdmShow(value, depth, maxDepth) {
       return '<object>';
     }
     let items = []
+    const value2: any = value;
     let prevIndex = -1;
-    for (let index in value) {
+    for (let index in value2) {
+      index = Number(index);
       const increment = index - prevIndex;
       if (increment > 1) {
         items.push('<skip '+(increment - 1)+'>');
       }
-      items.push(qdmShow(value[index], depth + 1, maxDepth));
+      items.push(qdmShow(value2[index], depth + 1, maxDepth));
       prevIndex = index;
     }
     const result = '[' + items.join(', ') + ']';
@@ -99,10 +111,14 @@ function qdmShow(value, depth, maxDepth) {
   return result;
 }
   
-export function diffObjects(obj1, obj2) {
-  const result = {isEqual: true, only1: {}, only2: {}, valuesDiffer: {}};
-  if (obj1 === null || typeof obj1 != 'object' ||
-        obj2 === null || typeof obj2 != 'object') {
+type AnyObject = {[string]: any};
+type Diff = {isEqual: boolean | null, only1: AnyObject, only2: AnyObject,
+      valuesDiffer: {[string]: {value1: AnyObject, value2: AnyObject}}};
+
+export function diffObjects(obj1: any, obj2: any): Diff {
+  const result: Diff = {isEqual: true, only1: {}, only2: {}, valuesDiffer: {}};
+  if (obj1 === null || typeof obj1 !== 'object' ||
+        obj2 === null || typeof obj2 !== 'object') {
     result.isEqual = null;
     return result;
   }
@@ -127,9 +143,9 @@ export function diffObjects(obj1, obj2) {
   return result;
 }
 
-var qdmPrevProps = null;
-var qdmPrevState = null;
-function showDiff(diff) {
+var qdmPrevProps: any = null;
+var qdmPrevState: any = null;
+function showDiff(diff: Diff): string {
   const result =
         diff.isEqual ? '' :
         '{isEqual: '+show(diff.isEqual)+
@@ -140,13 +156,14 @@ function showDiff(diff) {
         '}';
   return result;
 }
-export function showPropsCompare(props) {
+
+export function showPropsCompare(props: any): string {
   const diff = diffObjects(props, qdmPrevProps);
   const result = showDiff(diff);
   qdmPrevProps = props;
   return result;
 }
-export function showStateCompare(state) {
+export function showStateCompare(state: any): string {
   const diff = diffObjects(state, qdmPrevState);
   const result = showDiff(diff);
   qdmPrevState = state;

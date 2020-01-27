@@ -1,8 +1,17 @@
+// @flow
+
 // Copyright (c) 2020, David Cary, MIT License
 
 import quotes from './quotes';
+import type { QuoteItem } from './quotes';
 
-function pickOneInWindow(items, windowBase, windowLength, shiftBy, pickState) {
+function pickOneInWindow(
+  items: QuoteItem[],
+  windowBase: number,
+  windowLength: number,
+  shiftBy: number,
+  pickState: number
+): [QuoteItem, number, number] {
   const offset = Math.round(Math.abs(pickState)) % windowLength;
   const choiceIndex = (windowBase + offset) % items.length;
   const chosen = items[choiceIndex];
@@ -12,12 +21,14 @@ function pickOneInWindow(items, windowBase, windowLength, shiftBy, pickState) {
   return [chosen, newWindowBase, choiceIndex];
 }
 
-function getPairedQuotes(nbrRows) {
+export type PairedQuote = [number, string, string, string, string];
+
+function getPairedQuotes(nbrRows: number): PairedQuote[] {
   const result = [];
-  let quotesCopy = quotes.concat([]);
-  let windowBase = 1 - 1;
-  let windowLength = Math.trunc((quotesCopy.length + 1) / 2);
-  let shiftBy = 1;
+  const quotesCopy: QuoteItem[] = quotes.concat([]);
+  let windowBase = 0;
+  const windowLength = Math.trunc((quotesCopy.length + 1) / 2);
+  const shiftBy = 1;
   let item;
   let choiceIndex;
   let prstate = 59383;

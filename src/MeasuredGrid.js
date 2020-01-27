@@ -8,7 +8,7 @@ import { getScrollbarSize, getRTLOffsetType } from './domHelpers';
 import PositionTracker from './PositionTracker.js';
 import ScrollPosition from './ScrollPosition.js';
 import ErrBoundary from './ErrBoundary';
-import { isFiniteNumber, isFiniteNumberBetween } from './utils';
+import { isFiniteNumber, isFiniteNumberBetween, isArray } from './utils';
 
 import type { TimeoutID } from './timer';
 
@@ -19,10 +19,11 @@ type ColumnClassName = string |
   ColumnClassNameFunction |
   Array<string>;
 
-type ColumnWidthFunction = number => (string | number | null);
+type ColumnWidthValue = string | number | null;
+type ColumnWidthFunction = number => ColumnWidthValue;
 type ColumnWidth = string | number | null |
   ColumnWidthFunction |
-  Array<string | number | null>;
+  Array<ColumnWidthValue>;
 
 type Style = {[key: string]: string | number};
 type ColumnStyleFunction = number => Style;
@@ -35,7 +36,7 @@ type RenderComponentProps<T> = {|
   data: T,
   isScrolling?: boolean,
   rowIndex: number,
-  style: Object,
+  style: Style,
 |};
 
 type RenderComponent<T> = React$ComponentType<
@@ -44,27 +45,27 @@ type RenderComponent<T> = React$ComponentType<
 
 
 type ScrollEvent = SyntheticEvent<HTMLDivElement>;
-type Actions = {[name: string]: (any) => (any)} | {unmount: null};
+type Actions = {[name: string]: (mixed) => (mixed)} | {unmount: null};
 
 export type Props = {|
   children?: any,
-  columnClassName?: ColumnClassName,
+  columnClassName: ColumnClassName,
   columnCountInitial?: number,
-  columnPositionInitial?: ScrollPosition,
-  columnStyle?: ColumnStyle,
+  columnPositionInitial: ScrollPosition,
+  columnStyle: ColumnStyle,
   columnTracker?: PositionTracker | number,
-  columnWidth?: ColumnWidth,
-  dataArray?: Array<any>,
+  columnWidth: ColumnWidth,
+  dataArray?: Array<mixed>,
   //direction?: Direction,
-  itemKey?: (rowIndex: number, columnIndex: number | string) => string,
-  overscanRowCount?: number,
+  itemKey: (rowIndex: number, columnIndex: number | string) => string,
+  overscanRowCount: number,
   rowCountInitial?: number,
-  rowPositionInitial?: ScrollPosition,
+  rowPositionInitial: ScrollPosition,
   rowTracker?: PositionTracker,
   viewId?: string,
   viewClassName?: string,
   viewHeightInitial?: number | string,
-  viewStyle?: Style,
+  viewStyle: Style,
   viewWidthInitial?: number | string,
 |};
 
@@ -73,6 +74,13 @@ type State = {|
   isScrolling: boolean,
   rowPosition: ScrollPosition,
   columnPosition: ScrollPosition,
+|};
+
+type SetState = {|
+  instance?: any,
+  isScrolling?: boolean,
+  rowPosition?: ScrollPosition,
+  columnPosition?: ScrollPosition,
 |};
 
 type ViewDimensions = {
@@ -102,18 +110,21 @@ const EQUAL_HEIGHT_THRESHOLD = 0.01
 const defaultItemKey = (
   columnIndex: number,
   rowIndex: number | string
-  ) => `(${rowIndex}:${columnIndex})`;
+  ): string => `(${rowIndex}:${columnIndex})`;
 
 export default
 class MeasuredGrid extends React.Component<Props, State> {
   _columnClassNameSaved: ColumnClassName = '';
-  _columnClassNameFunction: ColumnClassNameFunction | null = null;
+  _columnClassNameFunction: ColumnClassNameFunction = (
+        (index: number): string => '');
   _columnCountInitial: any;
   _columnStyleSaved: ColumnStyle | null = null;
-  _columnStyleFunction: ColumnStyleFunction | null = null;
+  _columnStyleFunction: ColumnStyleFunction = (
+        (index: number): Style => ({}));
   _columnTracker: PositionTracker;
   _columnWidthSaved: ColumnWidth = null;
-  _columnWidthFunction: ColumnWidthFunction | null = null;
+  _columnWidthFunction: ColumnWidthFunction = (
+        (index: number): null => null);
   _dataArray: Array<any> | null;
   _dataArrayLengthSaved: number | null;
   _gridbaseRef: ReactDivRef = React.createRef();
@@ -121,14 +132,14 @@ class MeasuredGrid extends React.Component<Props, State> {
   _lastScrollTop: number = 0;
   _lastScrollLeft: number = 0;
   _renderedRef: ReactDivRef = React.createRef();
-  _renderedRowRange : ItemRange = {start: 0, end: 0};
+  _renderedRowRange: ItemRange = {start: 0, end: 0};
   _resetIsScrollingTimeoutId: TimeoutID | null = null;
   _rowCountInitial: any;
   _rowTracker: PositionTracker;
   _totalWidth: number;
-  _viewDimensions : ViewDimensions;
+  _viewDimensions: ViewDimensions;
   _viewRef: ReactDivRef = React.createRef();
-  _visibleRowRange : ItemRange = {start: 0, end: 0};
+  _visibleRowRange: ItemRange = {start: 0, end: 0};
 
  
   static defaultProps = {
@@ -192,16 +203,20 @@ class MeasuredGrid extends React.Component<Props, State> {
     this._totalWidth = this._getTotalWidth();
     const viewHeight = isFiniteNumberBetween(
           this.props.viewHeightInitial, 0) ?
-          this.props.viewHeightInitial : undefined;
+          this.props.viewHeightInitial : -1;
     const viewWidth = isFiniteNumberBetween(
           this.props.viewWidthInitial, 0) ?
-          this.props.viewWidthInitial : undefined;
+          this.props.viewWidthInitial : -1;
     this._viewDimensions = {
       height: viewHeight,
       innerHeight: viewHeight,
       innerWidth: viewWidth,
       width: viewWidth,
     };
+
+    this._columnClassNameFunction = this._checkColumnClassNameFunction(true);
+    this._columnStyleFunction = this._checkColumnStyleFunction(true);
+    this._columnWidthFunction = this._checkColumnWidthFunction(true);
 
     this.state = {
       isScrolling: false,
@@ -239,9 +254,12 @@ class MeasuredGrid extends React.Component<Props, State> {
       }
       that._columnTracker = new PositionTracker(columnCount);
     }
-    if (Array.isArray(nextProps.dataArray) &&
-          nextProps.dataArray.length !== that._rowTracker.getItemCount()) {
-      that._rowTracker.setItemCount(nextProps.dataArray.length);
+ 
+    const dataArrayLength: number | null = nextProps.dataArray ?
+          nextProps.dataArray.length : null;
+    if (dataArrayLength !== null &&
+          dataArrayLength !== that._rowTracker.getItemCount()) {
+      that._rowTracker.setItemCount(dataArrayLength);
     }
     const nbrRows = that._rowTracker.getItemCount();
     let rowResult = null;
@@ -328,7 +346,7 @@ class MeasuredGrid extends React.Component<Props, State> {
     this.setState({rowPosition: newRowPosition, columnPosition: newColumnPosition});
   }      
 
-  render() {
+  render(): any {
     const {
       children,
       columnStyle,
@@ -390,7 +408,7 @@ class MeasuredGrid extends React.Component<Props, State> {
           columnIndex <= columnStopIndex;
           columnIndex++
         ) {
-          let cellStyle: Style = {};
+          let cellStyle = {};
           cellStyle.display = 'inline-block';
           cellStyle.boxSizing = 'border-box';
           const cellColumnStyle = this._columnStyleFunction(columnIndex);
@@ -454,7 +472,7 @@ class MeasuredGrid extends React.Component<Props, State> {
           willChange: 'transform',
           direction,
         };
-    const fullViewStyle:any = Object.assign({}, baseStyle,
+    const fullViewStyle: any = Object.assign({}, baseStyle,
           viewDimensionStyle, viewStyle);
 
     const result = React.createElement(
@@ -464,8 +482,9 @@ class MeasuredGrid extends React.Component<Props, State> {
         className: 'grid-view' + (viewClassName ? ' ' + viewClassName : ''),
         ref: this._viewRef,
         style: fullViewStyle,
-        onScroll: evt => this._onScroll(evt),
-        onClick: evt => this._onResize(evt),
+        onScroll: (evt: ScrollEvent): void => this._onScroll(evt),
+        onClick: (evt: ScrollEvent): void => this._onResize(evt),
+ 
       },
       React.createElement(
         'div',
@@ -523,8 +542,7 @@ class MeasuredGrid extends React.Component<Props, State> {
     }
     let viewRightGridOffset = viewLeftGridOffset + viewWidth;
 
-    if (this.state.isScrolling) {
-    } else {
+    if (!this.state.isScrolling) {
       if (viewScrollLeft !== viewLeftGridOffset) {
         domView.scrollLeft = viewLeftGridOffset;
       }
@@ -594,40 +612,46 @@ class MeasuredGrid extends React.Component<Props, State> {
     }
   }
 
-  _checkColumnClassNameFunction() {
-    if (this._columnClassNameFunction === null ||
+  _checkColumnClassNameFunction(forceUpdate: boolean = false
+        ): ColumnClassNameFunction {
+    if (forceUpdate ||
           this._columnClassNameSaved !== this.props.columnClassName) {
       this._columnClassNameSaved = this.props.columnClassName;
       this._columnClassNameFunction = this._makeClassNameFunction(
             this._columnClassNameSaved);
     }
+    return this._columnClassNameFunction;
   }
 
-  _checkColumnStyleFunction() {
-    if (this._columnStyleFunction === null ||
+  _checkColumnStyleFunction(forceUpdate: boolean = false
+        ): ColumnStyleFunction {
+    if (forceUpdate ||
           this._columnStyleSaved !== this.props.columnStyle) {
       this._columnStyleSaved = this.props.columnStyle;
       this._columnStyleFunction = this._makeStyleFunction(
             this._columnStyleSaved);
     }
+    return this._columnStyleFunction;
   }
 
-  _checkColumnWidthFunction() {
-    if (this._columnWidthFunction === null ||
+  _checkColumnWidthFunction(forceUpdate: boolean = false
+        ): ColumnWidthFunction {
+    if (forceUpdate ||
           this._columnWidthSaved !== this.props.columnWidth) {
       this._columnWidthSaved = this.props.columnWidth;
       this._columnWidthFunction = this._makeWidthFunction(
             this._columnWidthSaved);
     }
+    return this._columnWidthFunction;
   }
 
   _childrenFromDataArray(rowIndex: number, columnIndex: number): string {
     let result = '';
     const dataArray = this.props.dataArray;
     if (Array.isArray(dataArray)) {
-      const rowData: any = dataArray[rowIndex];
+      const rowData: mixed = dataArray[rowIndex];
       if (Array.isArray(rowData)) {
-        const cellData: any = rowData[columnIndex];
+        const cellData: mixed = rowData[columnIndex];
         if (cellData !== undefined) {
           result = String(cellData);
         }
@@ -697,8 +721,8 @@ class MeasuredGrid extends React.Component<Props, State> {
   }
 
   _getRowRangeToRender(
-    rowPosition : ScrollPosition,
-    viewHeight : number
+    rowPosition: ScrollPosition,
+    viewHeight: number
   ): [number, number, number, number] {
     const overscanRowCount = this.props.overscanRowCount;
     const rowTracker = this._rowTracker;
@@ -746,7 +770,7 @@ class MeasuredGrid extends React.Component<Props, State> {
     let totalWidth = 0;
     for (let columnIndex = 0; columnIndex < columnCount; columnIndex++) {
       let cellWidth = this._columnWidthFunction(columnIndex);
-      if (cellWidth === null) {
+      if (cellWidth === null || typeof cellWidth === 'string') {
         cellWidth = columnTracker.getItemSize(columnIndex);
       } else {
         columnTracker.setItemSize(columnIndex, cellWidth);
@@ -818,7 +842,7 @@ class MeasuredGrid extends React.Component<Props, State> {
     rowTracker: PositionTracker,
     scrollPosition: ScrollPosition,
     viewHeight: number
-    ) : ItemRange {
+    ): ItemRange {
 
     const rowCount = rowTracker.getItemCount();
     const viewTop = Math.max(0, scrollPosition.getViewStartOffset(
@@ -877,10 +901,10 @@ class MeasuredGrid extends React.Component<Props, State> {
     return visibleRange;
   }
 
-  _makeClassNameFunction(className: mixed): ColumnClassNameFunction {
-    let classFunction: (number) => any;
+  _makeClassNameFunction(className: any): ColumnClassNameFunction {
+    let classFunction: (number) => mixed;
     if (Array.isArray(className)) {
-      classFunction = (index: number) => {
+      classFunction = (index: number): mixed => {
         let result = '';
         if (index < className.length) {
           result = className[index];
@@ -895,18 +919,18 @@ class MeasuredGrid extends React.Component<Props, State> {
       if (typeof className !== 'string') {
         className = '';
       }
-      classFunction = (index: number) => className;
+      classFunction = (index: number): mixed => className;
     }
-    return (index: number) => {
+    return (index: number): string => {
       const raw = classFunction(index);
       return typeof raw === 'string' ? raw : '';
     };
   }
 
-  _makeStyleFunction(style: mixed): ColumnStyleFunction {
-    let styleFunction: (number) => any;
+  _makeStyleFunction(style: any): ColumnStyleFunction {
+    let styleFunction: (number) => mixed;
     if (Array.isArray(style)) {
-      styleFunction = (index: number) => {
+      styleFunction = (index: number): mixed => {
         let result = {};
         if (index < style.length) {
           result = style[index];
@@ -918,19 +942,21 @@ class MeasuredGrid extends React.Component<Props, State> {
     } else if (typeof style === 'function') {
       styleFunction = style;
     } else {
-      styleFunction = (index: number) => style;
+      styleFunction = (index: number): mixed => style;
     }
-    return (index: number) => {
+    return (index: number): any => {
       const raw = styleFunction(index);
-      return (typeof raw === 'object' && raw !== undefined) ?
+      return (typeof raw === 'object' &&
+            raw !== null &&
+            raw !== undefined) ?
             raw : {};
     }
   }
 
-  _makeWidthFunction(width: mixed): ColumnWidthFunction {
-    let widthFunction: (number) => any;
+  _makeWidthFunction(width: any): ColumnWidthFunction {
+    let widthFunction: (number) => mixed;
     if (Array.isArray(width)) {
-      widthFunction = (index: number) => {
+      widthFunction = (index: number): mixed => {
         let result = null;
         if (index < width.length) {
           result = width[index];
@@ -942,9 +968,9 @@ class MeasuredGrid extends React.Component<Props, State> {
     } else if (typeof width === 'function') {
       widthFunction = width;
     } else {
-      widthFunction = (index: number) => width;
+      widthFunction = (index: number): mixed => width;
     }
-    return (index: number) => {
+    return (index: number): ColumnWidthValue => {
       const raw = widthFunction(index);
       return (typeof raw === 'number' ||
             typeof raw === 'string' || raw === null) ?
@@ -995,7 +1021,13 @@ class MeasuredGrid extends React.Component<Props, State> {
       const row = domRendered.children[rix];
       let rowIndex = -1;
       if (row.hasAttribute('rowindex')) {
-        rowIndex = Number(row.attributes['rowindex'].value);
+        const attributes = row.attributes;
+        for (let attrIx = 0; attrIx < attributes.length; attrIx++) {
+          if (attributes[attrIx].name === 'rowindex') {
+            rowIndex = Number(attributes[attrIx].value);
+            break;
+          }
+        }
       }
       if (rix === 0) {
         rowIndexStart = rowIndex;
@@ -1090,7 +1122,7 @@ class MeasuredGrid extends React.Component<Props, State> {
       this.state.columnPosition.updateFrom(newColumnPosition);
       this.state.rowPosition.updateFrom(newRowPosition);
     } else {
-      this.setState(prevState => {
+      this.setState((prevState: State): SetState => {
         return {
           isScrolling: true,
           columnPosition: newColumnPosition,
@@ -1113,8 +1145,7 @@ class MeasuredGrid extends React.Component<Props, State> {
       scrollTop,
       viewHeight,
       viewWidth,
-    }:
-    {
+    }: {
       calculatedScrollLeft: number,
       calculatedScrollTop: number,
       columnTracker: PositionTracker,

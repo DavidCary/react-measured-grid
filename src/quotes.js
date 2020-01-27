@@ -1,4 +1,8 @@
-var quotes = [
+// @flow
+
+export type QuoteItem = {| attribution: string, quote: string |};
+
+var quotes: QuoteItem[] = [
   {"attribution": "Maya Angelou", "quote": "I've learned that people will forget what you said, people will forget what you did, but people will never forget how you made them feel."},
   {"attribution": "Will Rogers", "quote": "Good judgment comes from experience, and a lot of that comes from bad judgment."},
   {"attribution": "Swami Vivekananda", "quote": "Take up one idea. Make that one idea your life - think of it, dream of it, live on that idea. Let the brain, muscles, nerves, every part of your body, be full of that idea, and just leave every other idea alone. This is the way to success."},
