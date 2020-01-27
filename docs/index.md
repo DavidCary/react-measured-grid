@@ -2,7 +2,7 @@
 
 # react-measured-grid API
 
-`react-measured-grid` display a virtualized grid
+`react-measured-grid` displays a virtualized grid
 with dynamically measured rows and columns in a scrollable viewing window.
 
 The package provides three commonly used classes:

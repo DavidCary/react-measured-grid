@@ -36,11 +36,13 @@ and other events and updates.
 Within the DOM, a MeasuredGrid uses DIV elements in various roles.  Those DIV elements are given the following class names based on their role, in addition to any class names specified in the props:
 
   - view window: 'grid-view'
-  - grid base, the usually lightly populated grid; rarely needs additional styling: 'grid-base'
-  - rendered rows, contains the rows that are populated in the DOM; rarely needs additional styling: 'grid-rendered'
+  - grid base: the usually lightly populated grid; rarely needs additional styling: 'grid-base'
+  - rendered rows: contains the rows that are populated in the DOM; rarely needs additional styling: 'grid-rendered'
   - row: contains the cells for a row: 'grid-row'
-    -- A row is also given a class name of 'grid-row-even' or 'grid-row-odd' 
-       depending on whether the row's zero-based index is even or odd.
+
+    - A row is also given a class name of 'grid-row-even' or 'grid-row-odd', 
+        depending on whether the row's zero-based index is even or odd.
+  
   - cell: contains content at the intersection of a row and a column: 'grid-cell'
 
 When using props to add styling to any of these elements, it is important to not disrupt or interfere
@@ -71,23 +73,6 @@ The function can reference any resource to build the cell contents,
 including the array that was passed as the `dataArray` prop.
 Preferrably the data from those resources should be accessible with minimal latency.
 
-## Get Actions
-
-The `getActions` callback prop is called from the  `MeasuredGrid` life-cycle methods
-componentDidMount and componentWillUnmount.
-
-When called from the componentDidMount, it is called with two arguments:
-  - The `MeasuredGrid` instance.
-  - An object with properties corresponding to the two functions described it the next section.
-    If called, these functions should be called as simple functions, not as methods.
-    The reference to the instance of `MeasuredGrid` is built-in.
-    - 'getScrollPositions': a function that calls the instance's method with that name and returns its value.
-    - 'positionAt': a function that calls the instance's method of that name and like the method, does not return a value.
-    
-When called from componentWillUnmount, the callback is called with two arguments:
-  - The `MeasuredGrid` instance.
-  - An object with a single own property: 'unmount' with a value of null.
-    
 ## Methods
 
 The following `MeasuredGrid` instance methods are available for use:
