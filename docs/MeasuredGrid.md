@@ -60,7 +60,7 @@ An instance of `MeasuredGrid` can be created without any children if the `dataAr
 In that case, `MeasuredGrid` will create cells from the `dataArray` value.
 
 Otherwise, a common approach is to give `MeasuredGrid` a single child that is a function
-that returns a cell's contents and takes three arguments:
+that returns a cell's contents and takes one props-like argument containing the following three properties:
 
   - rowIndex: the zero-based row index of the cell
   - columnIndex: the zero-based column index of the cell

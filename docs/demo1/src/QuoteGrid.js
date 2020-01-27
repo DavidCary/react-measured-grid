@@ -45,7 +45,7 @@ class QuoteGrid extends React.Component {
     this.columnPosition = new ScrollPosition();
   }
 
-  gridCell = (rowIndex, columnIndex, isScrolling) => {
+  gridCell = ({rowIndex, columnIndex, isScrolling}) => {
     const row = this.quoteData[rowIndex];
     const cell = (
       <div>

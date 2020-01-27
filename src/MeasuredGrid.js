@@ -424,7 +424,7 @@ class MeasuredGrid extends React.Component<Props, State> {
                 itemKey : defaultItemKey)(rowIndex, columnIndex);
           let child: any;
           if (typeof children === 'function') {
-            child = children(rowIndex, columnIndex, isScrolling);
+            child = children({rowIndex, columnIndex, isScrolling});
           } else if (useDataArray) {
             child = this._childrenFromDataArray(rowIndex, columnIndex);
           } else {
