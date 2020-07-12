@@ -1,6 +1,6 @@
 {
   "name": "react-measured-grid",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A smoother scrolling virtualized React grid with dynamically measured rows and columns.",
   "author": "David Cary",
   "license": "MIT",
