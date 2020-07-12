@@ -16,10 +16,10 @@
       with a combination of inline and selector-based CSS
       in units other than pixels.
 
-## Demo
+## Demos
 
 You can interact with several 
-[demos](https://DavidCary.github.io/react-measured-grid/demos.md)
+[demos](https://DavidCary.github.io/react-measured-grid/demos.html)
 to get an idea of the performance and flexibility this package offers
 and to compare its behavior to other implementation approaches.
 
