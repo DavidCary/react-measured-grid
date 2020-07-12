@@ -24,7 +24,7 @@ class QuoteGrid extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      nbrRows: 85,
+      nbrRows: 501,
       nbrRowsOK: true,
       quoteExWidth: 45,
       quoteExWidthUsed: 45,
@@ -40,7 +40,7 @@ class QuoteGrid extends React.Component {
     this.gridRef = React.createRef();
     this.quoteData = getPairedQuotes(this.state.nbrRows);
     this.rowTracker = new PositionTracker(this.quoteData.length, 55, 15);
-    this.rowPosition = new ScrollPosition();
+    this.rowPosition = new ScrollPosition(this.state.nbrRows);
     this.columnTracker = new PositionTracker(this.columns.length, 80, 40);
     this.columnPosition = new ScrollPosition();
   }
@@ -62,8 +62,8 @@ class QuoteGrid extends React.Component {
       message = 'Error: Number of Rows is not a number.';
     } else if (value < 0) {
       message = 'Error: Number of Rows is less than zero.';
-    } else if (value >= maxNbrRows) {
-      message = `Error: Number of Rows is too big (>= ${maxNbrRows}).`;
+    } else if (value > maxNbrRows) {
+      message = `Error: Number of Rows is too big (> ${maxNbrRows}).`;
     } else if (!Number.isInteger(value)) {
       message = 'Error: Number of Rows is not an integer.';
     }
@@ -192,9 +192,18 @@ class QuoteGrid extends React.Component {
         <h1>Demo 1: MeasuredGrid</h1>
         <div id='intro' style={{maxWidth: '90ex'}}>
           <p style={{marginBottom: '0.3em'}}>
-            This is a demo of a MeasuredGrid that displays pairs of quotes.
-            Quotes are listed with pseudorandom but fixed ordering and pairings.
-            You can use the inputs below to:
+            Check out below the smoother backwards scrolling over rows not previously displayed.<br/>
+            Then compare with the jerky backwards scrolling of react-virtualized Grid
+            at <a href='../../demo1B/build'>Demo1B</a>.
+          </p>
+          <p style={{marginBottom: '0.3em'}}>
+            See the quick response of virtualization by resizing the data
+            to 5,000 or 50,000 rows.<br/>
+            Then compare with the slow initial display time and high memory usage
+            at <a href='../../demo1C'>Demo1C</a>.
+          </p>
+          <p style={{marginBottom: '0.3em'}}>
+            You can also use the inputs below to:
           </p>
           <ul style={{marginTop: '0.3em'}}>
             <li>Change the number of rows in the grid.</li>

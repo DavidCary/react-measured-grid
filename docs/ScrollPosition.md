@@ -1,4 +1,4 @@
-| [react-measured-grid API](./api.md) | [MeasuredGrid](./MeasuredGrid.md) | [ScrollPosition](./ScrollPosition.md) | [PositionTracker](./PositionTracker.md) | [demo](./demo1/build) | [repo](https://github.com/DavidCary/react-measured-grid) |
+| [react-measured-grid API](./index.md) | [MeasuredGrid](./MeasuredGrid.md) | [ScrollPosition](./ScrollPosition.md) | [PositionTracker](./PositionTracker.md) | [demos](./demos.md) | [repo](https://github.com/DavidCary/react-measured-grid) |
 
 # ScrollPosition API
 
@@ -12,18 +12,18 @@ Instances of the class are used with `MeasuredGrid` for horizontal scrolling or 
 For horizontal scrolling, the index is a column index.
 For vertical scrolling, the index is a row index.
 
-The alignment describes how the row or column is aligned with the view window.  Possible values are:
+The alignment describes how the row or column are aligned with the view window.  Possible values are:
   - 'start': Aligns the start of the indexed item with the start of the view window.
   - 'center': Aligns the center of the indexed item with the center of the view window
       (unless the indexed item more than fills the view window,
-      in which case the the indexed item is aligned as if it had the 'start' alignment).
+      in which case the indexed item is aligned as with the 'start' alignment).
   - 'end': Aligns the end of the indexed item with the end of the view window.
   
 The additional offset is a number of pixels of additional scrolling.
-Positive values position the grid so that the visible portion of the grid
-is further from the grid's start and closer to its end.
-Negative values position the grid so that the visible portion of the grid
-is closer to the grid's start and away from its end.
+Positive values position the grid in the view window
+away from the grid's start and closer to its end.
+Negative values position the grid in the view window
+closer to the grid's start and away from its end.
 
 ## Conversions
 
@@ -34,7 +34,7 @@ Notably there is not a 1-to-1 correspondence between the two ways of representin
 Conversions generally favor in-range positions and `ScrollPosition`'s with an in-item offset.
 
 An in-range position is one that specifies a position that is within the range of the size of the grid.
-An in-range `scrollPosition` also uses an in-range index:
+An in-range `scrollPosition` also uses an in-range index,
 an index that is between 0 and one less than the number of items.
 As a special case, when there are zero items,
 a 0 index is still considered as being in-range.
@@ -106,7 +106,7 @@ The rest of the methods are instance methods.
       
 **`updateFrom(scrollPosition)`**
 
-  - Updates the instance with values from the supplied `scrollPosition`.
+  - Updates the instance with the supplied `scrollPosition`.
   - Does not return a value.
       
 **`withContainingIndex(positionTracker, viewSize)`**
@@ -114,6 +114,6 @@ The rest of the methods are instance methods.
   - Returns a new instance that is in-range and in-item and
       represents the same scrolling position,
       unless the calling instance specified a position that was not in-range.
-  - `vewSize` is the size in pixels of the view window
+  - `viewSize` is the size in pixels of the view window
       along the relevant axis.
          

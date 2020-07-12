@@ -482,6 +482,7 @@ class MeasuredGrid extends React.Component<Props, State> {
         className: 'grid-view' + (viewClassName ? ' ' + viewClassName : ''),
         ref: this._viewRef,
         style: fullViewStyle,
+        tabIndex: 0,
         onScroll: (evt: ScrollEvent): void => this._onScroll(evt),
         onClick: (evt: ScrollEvent): void => this._onResize(evt),
  

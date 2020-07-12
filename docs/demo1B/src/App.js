@@ -8,15 +8,15 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-          Paired Quotes grid with variable height rows.
+          Paired Quotes grid using Grid from react-virtualized.
         </p>
       </header>
       <nav>
         <div><a href='../..'>react-measured-grid API</a></div>
         <div><a href='https://github.com/DavidCary/react-measured-grid'>repo</a></div>
         <div><a href='../../demos.md'>demos</a></div>
-        <div class='inactive-link'>Demo 1</div>
-        <div><a href='../../demo1B/build'>Demo 1B</a></div>
+        <div><a href='../../demo1/build'>Demo 1</a></div>
+        <div class='inactive-link'>Demo 1B</div>
         <div><a href='../../demo1C'>Demo 1C</a></div>
       </nav>
       <main className="App-main">

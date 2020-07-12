@@ -1,4 +1,4 @@
-| [react-measured-grid API](./api.md) | [MeasuredGrid](./MeasuredGrid.md) | [ScrollPosition](./ScrollPosition.md) | [PositionTracker](./PositionTracker.md) | [demo](./demo1/build) | [repo](https://github.com/DavidCary/react-measured-grid) |
+| [react-measured-grid API](./index.md) | [MeasuredGrid](./MeasuredGrid.md) | [ScrollPosition](./ScrollPosition.md) | [PositionTracker](./PositionTracker.md) | [demos](./demos.md) | [repo](https://github.com/DavidCary/react-measured-grid) |
 
 # MeasuredGrid API
 
@@ -17,7 +17,7 @@ and other events and updates.
 | columnCountInitial | N |  The number of columns initially in the grid. If the `columnTracker` prop is also given, its number of columns takes precedence. If neither is provided, a default value of 1 is used. |
 | columnPositionInitial | N |  A `ScrollPosition` instance that specifies the initial horizontal positioning of the grid within the view window. The default value positions the view at the start of the rows. |
 | columnStyle | N |  Provides an object with properties consisting of React styles to augment the base style of a cell, depending on the index of the column.  The value can be a single object which is applied to all columns, a function that maps a column index to an object of React styles, or an array of React style objects. If an array is provided, and its length is non-zero but less than the number of columns in the grid, the last value of the array will be applied to the subsequent columns also. |
-| columnTracker | N | A `PositionTracker` instance. If provided, its number of rows takes precedence over the `columnCountInitial` prop if it is also provided. |
+| columnTracker | N | A `PositionTracker` instance. If provided, its number of columns takes precedence over the `columnCountInitial` prop if it is also provided. |
 | columnWidth | N | Provides for each column a column width specifier that can be a number (of pixels), a CSS width value (e.g. "10ex"), or the null value. The prop value can be such a width specifier that applies to all columns, a function that maps a column index to such a width specifier, or an array of such width specifiers. If an array is provided, and its length is non-zero but less than the number of columns in the grid, the last value of the array will be applied to the subsequent columns also. Any non-null value for a column will be applied to the inline style of each cell in the column. If a column is given a null value or if the prop is not given, selector-based CSS should specify a width for the column. |
 | dataArray | N |  An array of row arrays that provide values for each of the cells in the grid. Cell values from the array are converted to string values using the String() function, except that undefined values are converted to an empty string. With the 'dataArray' prop, a grid can be shown without giving `MeasuredGrid` any children. |
 | itemKey | N |  A function that maps a row index and column index to a cell key value. The key value helps React keep track of whether a row or cell needs to be re-rendered in the DOM, regardless of whether its relative position in the rendered DOM has changed. The default key is a string consisting of the row index and column index, separated by a comma and enclosed in parentheses, without any spaces, e.g. '(5:3)'. For a row key, the string 'row' is passed as the column index value. For the default row key, an example result is '(5:row)'. |
@@ -35,15 +35,16 @@ and other events and updates.
 
 Within the DOM, a MeasuredGrid uses DIV elements in various roles.  Those DIV elements are given the following class names based on their role, in addition to any class names specified in the props:
 
-  - view window: 'grid-view'
-  - grid base: the usually lightly populated grid; rarely needs additional styling: 'grid-base'
-  - rendered rows: contains the rows that are populated in the DOM; rarely needs additional styling: 'grid-rendered'
-  - row: contains the cells for a row: 'grid-row'
+  - view window: '**grid-view**'
+  - grid base, the usually lightly populated grid; rarely needs additional styling: '**grid-base**'
+  - rendered rows, contains the rows that are populated in the DOM; rarely needs additional styling: '**grid-rendered**'
+  - row: contains the cells for a row: '**grid-row**'
 
-    - A row is also given a class name of 'grid-row-even' or 'grid-row-odd', 
-        depending on whether the row's zero-based index is even or odd.
-  
-  - cell: contains content at the intersection of a row and a column: 'grid-cell'
+    - A row is also given a class name of 'even' or 'odd' 
+       depending on whether the row's zero-based index is even or odd:
+       '**grid-row even**' or '**grid-row odd**'
+
+  - cell: contains content at the intersection of a row and a column: '**grid-cell**'
 
 When using props to add styling to any of these elements, it is important to not disrupt or interfere
 with the element's existing styling.
@@ -77,20 +78,18 @@ Preferrably the data from those resources should be accessible with minimal late
 
 The following `MeasuredGrid` instance methods are available for use:
 
-  - getScrollPositions()
+  - `getScrollPositions()`
     - retrieves information about the current position of the grid within the view window
     - takes no arguments
     - returns an object with the following properties:
-      - 'column': a ScrollPosition instance for the current horizontal scroll position
-      - 'isScrolling': a boolean indicating whether a scrolling operation,
+      - `column`: a [ScrollPosition](./ScrollPosition.md) instance for the current horizontal scroll position
+      - `isScrolling`: a boolean indicating whether a scrolling operation,
           typically browser driven animation, appears to be in progress
-      - 'row': a ScrollPosition instance for the current vertical scroll position
-  - PositionAt(rowPosition, columnPosition)
+      - `row`: a [ScrollPosition](./ScrollPosition.md) instance for the current vertical scroll position
+  - `PositionAt(rowPosition, columnPosition)`
     - positions the grid within the view window
-    - takes the following arguments, both optional:
-      - rowPosition: a ScrollPosition instance indicating how to vertically reposition the grid
-      - columnPosition: a ScrollPosition instance that indicates how to horizontally reposition the grid
+    - takes the following arguments (each is ignored if falsey):
+      - rowPosition: a [ScrollPosition](./ScrollPosition.md) instance indicating how to vertically reposition the grid
+      - columnPosition: a [ScrollPosition](./ScrollPosition.md) instance that indicates how to horizontally reposition the grid
     - does not return a value
       
-  
-

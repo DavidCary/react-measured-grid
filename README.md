@@ -18,9 +18,10 @@
 
 ## Demo
 
-You can interact with a 
-[demo](https://DavidCary.github.io/react-measured-grid/demo1/build)
-to get an idea of the performance and flexibility this offers.
+You can interact with several 
+[demos](https://DavidCary.github.io/react-measured-grid/demos.md)
+to get an idea of the performance and flexibility this package offers
+and to compare its behavior to other implementation approaches.
 
 ## Install
 
@@ -77,12 +78,12 @@ that can be seen in the scrollable view window.
 In contrast, if `MeasuredGrid` needs to add part of a row to the DOM,
 it will add the entire row.
 
-`react-measured-grid` was inspired by
-[`react-virtualized`](https://npmjs.com/package/react-virtualized),
+This package was inspired by
+[react-virtualized](https://npmjs.com/package/react-virtualized),
 but is somewhat more directly a fork of
-[`react-window`](https://npmjs.co/package/react-window).
+[react-window](https://npmjs.co/package/react-window).
 
-`react-measured-grid` is designed
+This package is designed
 to provide smoother scrolling than `react-virtualized`,
 especially smoother backwards scrolling over rows not previously rendered.
 However `react-measured-grid` will typically be somewhat less efficient

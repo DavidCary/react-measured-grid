@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/react-measured-grid/demo1B/build/main.css",
+    "main.js": "/react-measured-grid/demo1B/build/main.js",
+    "main.js.map": "/react-measured-grid/demo1B/build/main.js.map",
+    "runtime-main.js": "/react-measured-grid/demo1B/build/runtime-main.js",
+    "runtime-main.js.map": "/react-measured-grid/demo1B/build/runtime-main.js.map",
+    "static/js/2.3e04cf59.chunk.js": "/react-measured-grid/demo1B/build/static/js/2.3e04cf59.chunk.js",
+    "static/js/2.3e04cf59.chunk.js.map": "/react-measured-grid/demo1B/build/static/js/2.3e04cf59.chunk.js.map",
+    "index.html": "/react-measured-grid/demo1B/build/index.html",
+    "precache-manifest.3a036b6a1c625064557b9087d8803a0b.js": "/react-measured-grid/demo1B/build/precache-manifest.3a036b6a1c625064557b9087d8803a0b.js",
+    "service-worker.js": "/react-measured-grid/demo1B/build/service-worker.js",
+    "main.css.map": "/react-measured-grid/demo1B/build/main.css.map",
+    "static/js/2.3e04cf59.chunk.js.LICENSE.txt": "/react-measured-grid/demo1B/build/static/js/2.3e04cf59.chunk.js.LICENSE.txt",
+    "main.js.LICENSE.txt": "/react-measured-grid/demo1B/build/main.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "runtime-main.js",
+    "static/js/2.3e04cf59.chunk.js",
+    "main.css",
+    "main.js"
+  ]
+}

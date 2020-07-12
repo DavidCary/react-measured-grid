@@ -1,4 +1,4 @@
-| [demo](./build) | [react-measured-grid API](../api.md) | [repo](https://github.com/DavidCary/react-measured-grid) |
+| [demo](./build) | [all demos](../demos.md) | [react-measured-grid API](../api.md) | [repo](https://github.com/DavidCary/react-measured-grid) |
 
 # Demo 1: React Measured Grid
 

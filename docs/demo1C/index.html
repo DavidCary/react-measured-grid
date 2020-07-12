@@ -1,0 +1,119 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Demo 1C: Full, static, non-virtualized grid">
+  <title>Demo1C: Full, static grid</title>
+  <link href="css/main.css" rel="stylesheet">
+  <script src="js/main.js"></script>
+</head>
+<body onLoad="onLoad()">
+<noscript>You need to enable JavaScript to run this app.</noscript>
+<div id="root">
+<div class="App">
+<header class="App-header">
+  <p>Paired Quotes grid as full, static html table.</p>
+</header>
+<nav>
+  <div><a href="../..">react-measured-grid API</a></div>
+  <div><a href="https://github.com/DavidCary/react-measured-grid">repo</a></div>
+  <div><a href='../demos.md'>demos</a></div>
+  <div><a href="../demo1/build">Demo 1</a></div>
+  <div><a href="../demo1B/build">Demo 1B</a></div>
+  <div class='inactive-link'>Demo 1C</div>
+</nav>
+<main class="App-main">
+<div id="quote-grid">
+  <h1>Demo 1C: Full, Static Grid</h1>
+  <div id="intro" style="max-width: 90ex;">
+    <p style="margin-bottom: 0.3em;">This demo uses just plain, static, fully rendered HTML, without using React or virtualization.</p>
+    <p style="margin-bottom: 0.3em;">To see the larger initial display time and memory use:</p>
+    <ul style="margin-top: 0.3em;">
+      <li>Resize the grid with more rows.  Try 5,000, 50,000 or 125,000 rows.</li>
+      <li>Watch for the message that reports how long it took to build the grid.</li>
+      <li>Optionally, open a utility that lets you also monitor memory usage.</li>
+    </ul>
+  </div>
+  <div id="quote-grid-message" style="visibility: hidden;">ok</div>
+    <table>
+      <tbody>
+        <tr id="resizing">
+          <td>
+            <button id="resize">Resize</button>
+          </td>
+          <td class="label">
+            <img id='wait-timer' src='img/wait-xa.png'/>
+            <label for="nbr-rows">Number of Rows: </label>
+          </td>
+          <td>
+            <input id="nbr-rows" size="5" value="1">
+          </td>
+          <td class="label">
+            <label for="quote-width">Quote Width (ex): </label>
+          </td>
+          <td>
+            <input id="quote-width" size="3" value="45">
+          </td>
+        </tr>
+        <tr id="positioning-at">
+          <td>
+            <button id="position-at">Position At</button>
+          </td>
+          <td class="label">
+            <label for="rows-index">Row Index: </label>
+          </td>
+          <td>
+            <input id="rows-index" size="5" value="-1">
+          </td>
+          <td class="label">
+            <label for="alignment">Alignment: </label>
+          </td>
+          <td>
+            <select id="alignment">
+              <option value="start">top</option>
+              <option value="center">center</option>
+              <option value="end">bottom</option>
+            </select>
+          </td>
+          <td class="label">
+            <label for="row-offset">Offset (px): </label>
+          </td>
+          <td>
+            <input id="row-offset" size="3" value="0">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <style id="quote-width-style">.col-quote.set1 { width: 45ex;}</style>
+    <div id="quote-grid-view" class="grid-view" style="position: relative; box-sizing: border-box; overflow: auto; will-change: transform; direction: ltr; width: 640px; height: 293.333px;">
+      <div id="grid-base" class="grid-base" style="position: relative; width: 1136px;">
+      <table>
+        <tbody>
+          <tr rowindex="0" class="grid-row even" datakey="(row:0)" style="box-sizing: border-box;">
+            <td class="grid-cell col-seq" columnindex="0" datakey="(0:0)" style="box-sizing: border-box;">
+              <div>0</div>
+            </td>
+            <td class="grid-cell col-attribution set1" columnindex="1" datakey="(1:0)" style="box-sizing: border-box;">
+              <div>Rita Mae Brown</div>
+            </td>
+            <td class="grid-cell col-quote set1" columnindex="2" datakey="(2:0)" style="box-sizing: border-box;">
+              <div>I know that after all is said and done, more is said than done.</div>
+            </td>
+            <td class="grid-cell col-attribution set2" columnindex="3" datakey="(3:0)" style="box-sizing: border-box;">
+              <div>Henry David Thoreau</div>
+            </td>
+            <td class="grid-cell col-quote set2" columnindex="4" datakey="(4:0)" style="box-sizing: border-box; width: 400px;">
+              <div>It's not what you look at that matters, it's what you see.</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+</div>
+</main>
+</div>
+</div>
+</body>
+</html>
